@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum StateType
 {
-    None = 0,
+    NONE = 0,
     YOU = 1,
     DEFEAT = 2,
     WIN = 3,
@@ -17,7 +17,7 @@ public class Subject : MonoBehaviour
 {
     private SubjectState _SubjectState;
 
-    public StateType _StateType = StateType.None;
+    public StateType _StateType = StateType.NONE;
 
     Dictionary<StateType, SubjectState> _states = new Dictionary<StateType, SubjectState>();
 
@@ -29,16 +29,14 @@ public class Subject : MonoBehaviour
 
     private void Update()
     {
+        if (_StateType.Equals(StateType.NONE)) return;
 
-        if (_StateType != StateType.None)
-        {
-            _SubjectState.OnUpdate();
-        }
+        _SubjectState.OnUpdate();
     }
 
     private void FixedUpdate()
     {
-        if (_StateType != StateType.None) return;
+        if (_StateType.Equals(StateType.NONE)) return;
 
         _SubjectState.OnFixedUpdate();
     }
@@ -58,7 +56,7 @@ public class Subject : MonoBehaviour
         {
             AddState((StateType)i, SubjectManager.Instance._SubjectStates[i]);
         }
-        
+
         _SubjectState = _states[_StateType];
     }
 

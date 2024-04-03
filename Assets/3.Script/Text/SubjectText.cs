@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class SubjectText : MonoBehaviour
 {
-    private string _tag = "Untagged";
+    [SerializeField] private string _tag = string.Empty;
 
-    private void Start()
+    public void WAN() // 메서드명 바꿔야함
     {
-        
-        gameObject.tag= _tag;
+        GameObject[] gameobjects = GameObject.FindGameObjectsWithTag(_tag);
+        SubjectActive(gameobjects);
     }
+
+    private void SubjectActive(GameObject[] objs)
+    {
+        for (int i = 0; i < objs.Length; i++)
+        {
+            // TODO 투명도 하기
+
+        }
+    }
+
 }
