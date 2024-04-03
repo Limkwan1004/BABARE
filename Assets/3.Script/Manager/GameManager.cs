@@ -9,7 +9,7 @@ public struct GameData
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance = new GameManager();
+    public static GameManager Instance = null;
 
 
     private void Awake()
