@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum StateType
@@ -27,9 +28,11 @@ public class Subject : MonoBehaviour
 
     Dictionary<StateType, SubjectState> _states = new Dictionary<StateType, SubjectState>();
 
+    public bool canMove = false;
+
     private void Awake()
     {
-        _Subject = new SubjectState[System.Enum.GetValues(typeof(StateType)).Length-1];
+        _Subject = new SubjectState[System.Enum.GetValues(typeof(StateType)).Length - 1];
         _Subject[0] = GetComponent<YouState>();
         _Subject[1] = GetComponent<DefeatState>();
         _Subject[2] = GetComponent<WinState>();
@@ -46,6 +49,15 @@ public class Subject : MonoBehaviour
     private void Update()
     {
         if (_StateType.Equals(StateType.NONE)) return;
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ChangeState(StateType.DEFEAT);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ChangeState(StateType.WIN);
+        }
 
         _SubjectState.OnUpdate();
     }

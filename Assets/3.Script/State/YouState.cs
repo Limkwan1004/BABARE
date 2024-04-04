@@ -46,7 +46,6 @@ public class YouState : SubjectState
         {
             Vector3 end = transform.position + Vector3.down;
             StartCoroutine(Move(end));
-
         }
     }
 
