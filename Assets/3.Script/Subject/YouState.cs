@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class YouState : SubjectState
 {
-    private Vector3 _moveDirection = Vector3.zero;
     private bool isMove = false;
-    [SerializeField] private float _moveTime = 0.5f;
+    [SerializeField] private float _moveSpeed = 5f;
 
     public override void OnEnter()
     {
@@ -26,33 +25,43 @@ public class YouState : SubjectState
 
     public override void OnUpdate()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        if (!horizontal.Equals(0) || !vertical.Equals(0))
+        if (Input.GetKey(KeyCode.RightArrow) && !isMove)
         {
-            _moveDirection = new Vector2(horizontal, vertical);
+            Vector3 end = transform.position + Vector3.right;
+            StartCoroutine(Move(end));
+        }
+        if (Input.GetKey(KeyCode.LeftArrow) && !isMove)
+        {
+            Vector3 end = transform.position + Vector3.left;
+            StartCoroutine(Move(end));
 
-            if (!isMove)
-            {
-                Vector3 end = transform.position + _moveDirection;
-                StartCoroutine(GridMove(end));
-            }
+        }
+        if (Input.GetKey(KeyCode.UpArrow) && !isMove)
+        {
+            Vector3 end = transform.position + Vector3.up;
+            StartCoroutine(Move(end));
+
+        }
+        if (Input.GetKey(KeyCode.DownArrow) && !isMove)
+        {
+            Vector3 end = transform.position + Vector3.down;
+            StartCoroutine(Move(end));
+
         }
     }
 
-    IEnumerator GridMove(Vector3 end)
+    IEnumerator Move(Vector3 end)
     {
         isMove = true;
+        Vector3 start = transform.position;
 
         float percent = 0;
         float current = 0;
-        Vector3 start = transform.position;
 
         while (percent < 1)
         {
             current += Time.deltaTime;
-            percent = current / _moveTime;
+            percent = current * _moveSpeed;
 
             transform.position = Vector3.Lerp(start, end, percent);
 
@@ -60,6 +69,6 @@ public class YouState : SubjectState
         }
 
         isMove = false;
+        yield return null;
     }
-
 }

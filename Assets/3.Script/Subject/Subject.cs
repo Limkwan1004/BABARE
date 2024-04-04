@@ -10,16 +10,32 @@ public enum StateType
     WIN = 3,
     PUSH = 4,
     STOP = 5,
-    MOVE = 6,
 }
+
+[RequireComponent(typeof(YouState))]
+[RequireComponent(typeof(DefeatState))]
+[RequireComponent(typeof(WinState))]
+[RequireComponent(typeof(StopState))]
+[RequireComponent(typeof(PushState))]
+
 
 public class Subject : MonoBehaviour
 {
     private SubjectState _SubjectState;
-
+    [SerializeField] SubjectState[] _Subject;
     public StateType _StateType = StateType.NONE;
 
     Dictionary<StateType, SubjectState> _states = new Dictionary<StateType, SubjectState>();
+
+    private void Awake()
+    {
+        _Subject = new SubjectState[System.Enum.GetValues(typeof(StateType)).Length-1];
+        _Subject[0] = GetComponent<YouState>();
+        _Subject[1] = GetComponent<DefeatState>();
+        _Subject[2] = GetComponent<WinState>();
+        _Subject[3] = GetComponent<PushState>();
+        _Subject[4] = GetComponent<StopState>();
+    }
 
     private void Start()
     {
@@ -52,12 +68,12 @@ public class Subject : MonoBehaviour
 
     private void StateDefaultSetting()
     {
-        for (int i = 0; i < System.Enum.GetValues(typeof(StateType)).Length; i++)
+        for (int i = 0; i < System.Enum.GetValues(typeof(StateType)).Length - 1; i++)
         {
-            AddState((StateType)i, SubjectManager.Instance._SubjectStates[i]);
+            AddState((StateType)i + 1, _Subject[i]);
         }
 
-        _SubjectState = _states[_StateType];
+        if (!_StateType.Equals(StateType.NONE)) _SubjectState = _states[_StateType];
     }
 
     private void AddState(StateType stateType, SubjectState subjectState)
