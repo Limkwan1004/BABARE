@@ -22,7 +22,7 @@ public enum StateType
 
 public class Subject : MonoBehaviour
 {
-    private SubjectState _SubjectState;
+    public SubjectState _SubjectState { get; private set; }
     [SerializeField] SubjectState[] _Subject;
     public StateType _StateType = StateType.NONE;
 
@@ -38,11 +38,11 @@ public class Subject : MonoBehaviour
         _Subject[2] = GetComponent<WinState>();
         _Subject[3] = GetComponent<PushState>();
         _Subject[4] = GetComponent<StopState>();
+        StateDefaultSetting();
     }
 
     private void Start()
     {
-        StateDefaultSetting();
 
     }
 

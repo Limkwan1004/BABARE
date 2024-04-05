@@ -9,6 +9,7 @@ TagManager:
   - WALL
   - SKULL
   - ROCK
+  - REACH
   layers:
   - Default
   - TransparentFX
