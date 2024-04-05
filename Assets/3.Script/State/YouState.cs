@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class YouState : SubjectState
 {
     private bool isMove = false;
     [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private Tilemap _tileMap;
 
     public override void OnEnter()
     {

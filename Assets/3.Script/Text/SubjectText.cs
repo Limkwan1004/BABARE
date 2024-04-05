@@ -1,24 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SubjectText : MonoBehaviour
 {
-    [SerializeField] private string _tag = string.Empty;
+    [SerializeField] private Tilemap _tilemap;
+    [SerializeField] private TileBase _tileBase;
 
-    public void WAN() // 메서드명 바꿔야함
+    private void SubjectActive()
     {
-        GameObject[] gameobjects = GameObject.FindGameObjectsWithTag(_tag);
-        SubjectActive(gameobjects);
-    }
-
-    private void SubjectActive(GameObject[] objs)
-    {
-        for (int i = 0; i < objs.Length; i++)
-        {
-            // TODO 투명도 하기
-
-        }
+        _tileBase.GetComponent<SpriteRenderer>();
     }
 
 }
